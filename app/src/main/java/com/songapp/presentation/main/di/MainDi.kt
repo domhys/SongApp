@@ -1,5 +1,6 @@
 package com.songapp.presentation.main.di
 
+import com.songapp.domain.use_cases.GetLocalSongsUseCase
 import com.songapp.presentation.main.MainActivity
 import com.songapp.presentation.main.MainContract
 import com.songapp.presentation.main.MainModel
@@ -38,8 +39,15 @@ class MainModule(private val activity: MainActivity) {
     @MainScope
     @Provides
     fun providesModel(
+        getLocalSongsUseCase: GetLocalSongsUseCase
+    ): MainModel = MainModel(getLocalSongsUseCase)
+
+
+    @MainScope
+    @Provides
+    fun providesGetLocalSongsUseCase(
         localSongsRepository: LocalSongsRepository
-    ): MainModel = MainModel(localSongsRepository)
+    ): GetLocalSongsUseCase = GetLocalSongsUseCase(localSongsRepository)
 
     @MainScope
     @Provides

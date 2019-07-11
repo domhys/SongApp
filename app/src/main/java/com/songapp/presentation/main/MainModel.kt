@@ -1,13 +1,10 @@
 package com.songapp.presentation.main
 
-import com.songapp.domain.model.Song
-import com.songapp.repository.songs_local.LocalSongsRepository
-import io.reactivex.Single
+import com.songapp.domain.use_cases.GetLocalSongsUseCase
 
 class MainModel(
-    private val localSongsRepository: LocalSongsRepository
+    private val getLocalSongsUseCase: GetLocalSongsUseCase
 ) {
 
-    fun getSongs(): Single<List<Song>> =
-        Single.fromCallable { localSongsRepository.getSongs() }
+    fun getSongs() = getLocalSongsUseCase.getSongs()
 }
