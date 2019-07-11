@@ -2,7 +2,10 @@ package com.songapp.presentation.main.di
 
 import com.songapp.presentation.main.MainActivity
 import com.songapp.presentation.main.MainContract
+import com.songapp.presentation.main.MainModel
 import com.songapp.presentation.main.MainPresenter
+import com.songapp.repository.songs_local.LocalSongsRepository
+import com.songapp.utility.AssetsStringReader
 import dagger.Component
 import dagger.Module
 import dagger.Provides
@@ -27,5 +30,24 @@ class MainModule(private val activity: MainActivity) {
 
     @MainScope
     @Provides
-    fun providesPresenter(): MainContract.Presenter = MainPresenter()
+    fun providesPresenter(
+        mainView: MainContract.View,
+        mainModel: MainModel
+    ): MainContract.Presenter = MainPresenter(mainView, mainModel)
+
+    @MainScope
+    @Provides
+    fun providesModel(
+        localSongsRepository: LocalSongsRepository
+    ): MainModel = MainModel(localSongsRepository)
+
+    @MainScope
+    @Provides
+    fun providesLocalSongsRepository(
+        assetsStringReader: AssetsStringReader
+    ): LocalSongsRepository = LocalSongsRepository(assetsStringReader)
+
+    @MainScope
+    @Provides
+    fun providesAssetsStringReader() : AssetsStringReader = AssetsStringReader(activity)
 }
