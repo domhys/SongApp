@@ -5,6 +5,7 @@ import android.view.Menu
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.songapp.R
+import com.songapp.application.SongApplication
 import com.songapp.domain.model.Song
 import com.songapp.presentation.base.BaseView
 import com.songapp.presentation.main.di.DaggerMainComponent
@@ -30,6 +31,7 @@ class MainActivity : BaseView<MainContract.Presenter>(), MainContract.View {
 
     override fun createGraph() {
         DaggerMainComponent.builder()
+            .applicationComponent((application as SongApplication).applicationComponent)
             .mainModule(MainModule(this))
             .build()
             .inject(this)

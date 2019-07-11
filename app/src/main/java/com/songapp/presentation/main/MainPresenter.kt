@@ -14,10 +14,15 @@ class MainPresenter(
     }
 
     private fun getSongs(query: String) {
-        register(mainModel.getSongs(query)
+//        register(mainModel.getLocalSongs(query)
+//            .subscribe({ songs ->
+//                mainView.displaySongs(songs)
+//            }, Timber::e))
+        register(mainModel.getRemoteSongs(query)
             .subscribe({ songs ->
                 mainView.displaySongs(songs)
-            }, Timber::e))
+            }, Timber::e)
+        )
     }
 
     override fun searchQuerySubmitted(query: String): Boolean {

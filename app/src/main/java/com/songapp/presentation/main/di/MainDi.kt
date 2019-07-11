@@ -1,11 +1,15 @@
 package com.songapp.presentation.main.di
 
+import com.google.gson.Gson
+import com.songapp.application.di.ApplicationComponent
 import com.songapp.domain.use_cases.GetLocalSongsUseCase
+import com.songapp.domain.use_cases.GetRemoteSongsUseCase
 import com.songapp.presentation.main.MainActivity
 import com.songapp.presentation.main.MainContract
 import com.songapp.presentation.main.MainModel
 import com.songapp.presentation.main.MainPresenter
 import com.songapp.repository.songs_local.LocalSongsRepository
+import com.songapp.repository.songs_remote.RestSongRepository
 import com.songapp.utility.AssetsStringReader
 import dagger.Component
 import dagger.Module
@@ -13,7 +17,7 @@ import dagger.Provides
 import javax.inject.Scope
 
 @MainScope
-@Component(modules = [MainModule::class])
+@Component(modules = [MainModule::class], dependencies = [ApplicationComponent::class])
 interface MainComponent {
     fun inject(activity: MainActivity)
 }
@@ -39,8 +43,9 @@ class MainModule(private val activity: MainActivity) {
     @MainScope
     @Provides
     fun providesModel(
-        getLocalSongsUseCase: GetLocalSongsUseCase
-    ): MainModel = MainModel(getLocalSongsUseCase)
+        getLocalSongsUseCase: GetLocalSongsUseCase,
+        getRemoteSongsUseCase: GetRemoteSongsUseCase
+    ): MainModel = MainModel(getLocalSongsUseCase, getRemoteSongsUseCase)
 
 
     @MainScope
@@ -51,9 +56,16 @@ class MainModule(private val activity: MainActivity) {
 
     @MainScope
     @Provides
+    fun providesGetRemoteSongsUseCase(
+        restSongRepository: RestSongRepository
+    ): GetRemoteSongsUseCase = GetRemoteSongsUseCase(restSongRepository)
+
+    @MainScope
+    @Provides
     fun providesLocalSongsRepository(
-        assetsStringReader: AssetsStringReader
-    ): LocalSongsRepository = LocalSongsRepository(assetsStringReader)
+        assetsStringReader: AssetsStringReader,
+        gson: Gson
+    ): LocalSongsRepository = LocalSongsRepository(assetsStringReader, gson)
 
     @MainScope
     @Provides
