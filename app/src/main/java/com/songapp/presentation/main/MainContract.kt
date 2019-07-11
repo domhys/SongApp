@@ -11,6 +11,7 @@ interface MainContract {
     }
 
     interface Presenter: IBasePresenter {
-
+        fun searchQuerySubmitted(query: String): Boolean
+        fun queryTextChanged(query: String): Boolean
     }
 }

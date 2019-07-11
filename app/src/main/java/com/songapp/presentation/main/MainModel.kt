@@ -6,5 +6,5 @@ class MainModel(
     private val getLocalSongsUseCase: GetLocalSongsUseCase
 ) {
 
-    fun getSongs() = getLocalSongsUseCase.getSongs()
+    fun getSongs(query: String) = getLocalSongsUseCase.getSongs(query)
 }

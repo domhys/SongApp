@@ -10,13 +10,23 @@ class MainPresenter(
 
     override fun onBind() {
         super.onBind()
-        getSongs()
+        getSongs("")
     }
 
-    private fun getSongs() {
-        register(mainModel.getSongs()
+    private fun getSongs(query: String) {
+        register(mainModel.getSongs(query)
             .subscribe({ songs ->
                 mainView.displaySongs(songs)
             }, Timber::e))
+    }
+
+    override fun searchQuerySubmitted(query: String): Boolean {
+        getSongs(query)
+        return true
+    }
+
+    override fun queryTextChanged(query: String): Boolean {
+        getSongs(query)
+        return true
     }
 }
