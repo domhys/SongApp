@@ -2,12 +2,15 @@ package com.songapp.presentation.main.di
 
 import com.google.gson.Gson
 import com.songapp.application.di.ApplicationComponent
+import com.songapp.domain.use_cases.IsLocalDataTurnedOnUseCase
+import com.songapp.domain.use_cases.IsRemoteDataTurnedOnUseCase
 import com.songapp.domain.use_cases.GetLocalSongsUseCase
 import com.songapp.domain.use_cases.GetRemoteSongsUseCase
 import com.songapp.presentation.main.MainActivity
 import com.songapp.presentation.main.MainContract
 import com.songapp.presentation.main.MainModel
 import com.songapp.presentation.main.MainPresenter
+import com.songapp.repository.SharedPreferencesRepository
 import com.songapp.repository.songs_local.LocalSongsRepository
 import com.songapp.repository.songs_remote.RestSongRepository
 import com.songapp.utility.AssetsStringReader
@@ -44,8 +47,15 @@ class MainModule(private val activity: MainActivity) {
     @Provides
     fun providesModel(
         getLocalSongsUseCase: GetLocalSongsUseCase,
-        getRemoteSongsUseCase: GetRemoteSongsUseCase
-    ): MainModel = MainModel(getLocalSongsUseCase, getRemoteSongsUseCase)
+        getRemoteSongsUseCase: GetRemoteSongsUseCase,
+        isLocalDataTurnedOnUseCase: IsLocalDataTurnedOnUseCase,
+        isRemoteDataTurnedOnUseCase: IsRemoteDataTurnedOnUseCase
+    ): MainModel = MainModel(
+        getLocalSongsUseCase,
+        getRemoteSongsUseCase,
+        isLocalDataTurnedOnUseCase,
+        isRemoteDataTurnedOnUseCase
+    )
 
 
     @MainScope
@@ -59,6 +69,18 @@ class MainModule(private val activity: MainActivity) {
     fun providesGetRemoteSongsUseCase(
         restSongRepository: RestSongRepository
     ): GetRemoteSongsUseCase = GetRemoteSongsUseCase(restSongRepository)
+
+    @MainScope
+    @Provides
+    fun providesGetIsLocalDataTurnedOnUseCase(
+        sharedPreferencesRepository: SharedPreferencesRepository
+    ): IsLocalDataTurnedOnUseCase = IsLocalDataTurnedOnUseCase(sharedPreferencesRepository)
+
+    @MainScope
+    @Provides
+    fun providesGetIsRemoteDataTurnedOnUseCase(
+        sharedPreferencesRepository: SharedPreferencesRepository
+    ): IsRemoteDataTurnedOnUseCase = IsRemoteDataTurnedOnUseCase(sharedPreferencesRepository)
 
     @MainScope
     @Provides

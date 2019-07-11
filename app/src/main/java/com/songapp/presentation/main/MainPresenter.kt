@@ -1,7 +1,9 @@
 package com.songapp.presentation.main
 
+import com.songapp.domain.model.DataSource
 import com.songapp.presentation.base.BasePresenter
 import timber.log.Timber
+import java.lang.IllegalArgumentException
 
 class MainPresenter(
     val mainView: MainContract.View,
@@ -33,5 +35,19 @@ class MainPresenter(
     override fun queryTextChanged(query: String): Boolean {
         getSongs(query)
         return true
+    }
+
+    override fun settingsClicked() {
+        mainView.displayChooseSourceDialog(
+            booleanArrayOf(mainModel.isLocalDataTurnedOn, mainModel.isRemoteDataTurnedOn)
+        )
+    }
+
+    override fun sourceChanged(source: DataSource, isChecked: Boolean) {
+        when(source) {
+            DataSource.LOCAL -> mainModel.isLocalDataTurnedOn = isChecked
+            DataSource.REMOTE -> mainModel.isRemoteDataTurnedOn = isChecked
+            DataSource.INVALID -> throw IllegalArgumentException()
+        }
     }
 }

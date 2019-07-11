@@ -2,10 +2,13 @@ package com.songapp.presentation.main
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.songapp.R
 import com.songapp.application.SongApplication
+import com.songapp.domain.model.DataSource
 import com.songapp.domain.model.Song
 import com.songapp.presentation.base.BaseView
 import com.songapp.presentation.main.di.DaggerMainComponent
@@ -58,8 +61,30 @@ class MainActivity : BaseView<MainContract.Presenter>(), MainContract.View {
         return true
     }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        if (item?.itemId == R.id.settings) {
+            presenter.settingsClicked()
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     override fun displaySongs(songs: List<Song>) {
         adapter.updateData(songs)
+    }
+
+    override fun displayChooseSourceDialog(dataSourcesState: BooleanArray) {
+        AlertDialog.Builder(this)
+            .setMultiChoiceItems(R.array.songs_source_options, dataSourcesState
+            ) { _, which, isChecked ->
+                presenter.sourceChanged(DataSource.createFromIndex(which), isChecked)
+
+            }.setTitle(R.string.choose_source)
+            .setCancelable(false)
+            .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }.create()
+            .show()
     }
 
     companion object {

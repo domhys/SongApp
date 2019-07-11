@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">SongApp</string>
     <string name="search">search</string>
+    <string name="settings">Settings</string>
+    <string name="choose_source">Choose the source of songs</string>
+
+    <string-array name="songs_source_options">
+        <item>Local</item>
+        <item>Remote</item>
+    </string-array>
 </resources>
