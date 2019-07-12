@@ -82,7 +82,18 @@ class MainActivity : BaseView<MainContract.Presenter>(), MainContract.View {
     }
 
     override fun displaySongs(songs: List<Song>) {
+        if (songs.isEmpty()) displayNoResultsView() else displaySongs()
         adapter.updateData(songs)
+    }
+
+    private fun displayNoResultsView() {
+        emptyView.isVisible = true
+        songsList.isGone = true
+    }
+
+    private fun displaySongs() {
+        emptyView.isGone = true
+        songsList.isVisible = true
     }
 
     override fun showProgressBar() {
