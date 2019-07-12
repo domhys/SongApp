@@ -14,6 +14,8 @@ import com.songapp.utility.AssetsStringReader
 import dagger.Component
 import dagger.Module
 import dagger.Provides
+import io.reactivex.Scheduler
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Scope
 
 @MainScope
@@ -55,17 +57,20 @@ class MainModule(private val activity: MainActivity) {
     @MainScope
     @Provides
     fun providesGetLocalSongsUseCase(
+        scheduler: Scheduler,
         localSongsRepository: LocalSongsRepository
-    ): GetLocalSongsUseCase = GetLocalSongsUseCase(localSongsRepository)
+    ): GetLocalSongsUseCase = GetLocalSongsUseCase(scheduler, localSongsRepository)
 
     @MainScope
     @Provides
     fun providesGetSongsUseCase(
+        scheduler: Scheduler,
         getLocalSongsUseCase: GetLocalSongsUseCase,
         getRemoteSongsUseCase: GetRemoteSongsUseCase,
         isLocalDataTurnedOnUseCase: IsLocalDataTurnedOnUseCase,
         isRemoteDataTurnedOnUseCase: IsRemoteDataTurnedOnUseCase
     ): GetSongsUseCase = GetSongsUseCase(
+        scheduler,
         getLocalSongsUseCase,
         getRemoteSongsUseCase,
         isLocalDataTurnedOnUseCase,
@@ -75,8 +80,13 @@ class MainModule(private val activity: MainActivity) {
     @MainScope
     @Provides
     fun providesGetRemoteSongsUseCase(
+        scheduler: Scheduler,
         restSongRepository: RestSongRepository
-    ): GetRemoteSongsUseCase = GetRemoteSongsUseCase(restSongRepository)
+    ): GetRemoteSongsUseCase = GetRemoteSongsUseCase(scheduler, restSongRepository)
+
+    @MainScope
+    @Provides
+    fun providesScheduler(): Scheduler = Schedulers.io()
 
     @MainScope
     @Provides
