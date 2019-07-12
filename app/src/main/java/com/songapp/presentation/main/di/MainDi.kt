@@ -2,10 +2,7 @@ package com.songapp.presentation.main.di
 
 import com.google.gson.Gson
 import com.songapp.application.di.ApplicationComponent
-import com.songapp.domain.use_cases.IsLocalDataTurnedOnUseCase
-import com.songapp.domain.use_cases.IsRemoteDataTurnedOnUseCase
-import com.songapp.domain.use_cases.GetLocalSongsUseCase
-import com.songapp.domain.use_cases.GetRemoteSongsUseCase
+import com.songapp.domain.use_cases.*
 import com.songapp.presentation.main.MainActivity
 import com.songapp.presentation.main.MainContract
 import com.songapp.presentation.main.MainModel
@@ -46,23 +43,34 @@ class MainModule(private val activity: MainActivity) {
     @MainScope
     @Provides
     fun providesModel(
-        getLocalSongsUseCase: GetLocalSongsUseCase,
-        getRemoteSongsUseCase: GetRemoteSongsUseCase,
+        getSongsUseCase: GetSongsUseCase,
         isLocalDataTurnedOnUseCase: IsLocalDataTurnedOnUseCase,
         isRemoteDataTurnedOnUseCase: IsRemoteDataTurnedOnUseCase
     ): MainModel = MainModel(
-        getLocalSongsUseCase,
-        getRemoteSongsUseCase,
+        getSongsUseCase,
         isLocalDataTurnedOnUseCase,
         isRemoteDataTurnedOnUseCase
     )
-
 
     @MainScope
     @Provides
     fun providesGetLocalSongsUseCase(
         localSongsRepository: LocalSongsRepository
     ): GetLocalSongsUseCase = GetLocalSongsUseCase(localSongsRepository)
+
+    @MainScope
+    @Provides
+    fun providesGetSongsUseCase(
+        getLocalSongsUseCase: GetLocalSongsUseCase,
+        getRemoteSongsUseCase: GetRemoteSongsUseCase,
+        isLocalDataTurnedOnUseCase: IsLocalDataTurnedOnUseCase,
+        isRemoteDataTurnedOnUseCase: IsRemoteDataTurnedOnUseCase
+    ): GetSongsUseCase = GetSongsUseCase(
+        getLocalSongsUseCase,
+        getRemoteSongsUseCase,
+        isLocalDataTurnedOnUseCase,
+        isRemoteDataTurnedOnUseCase
+    )
 
     @MainScope
     @Provides

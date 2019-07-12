@@ -16,11 +16,7 @@ class MainPresenter(
     }
 
     private fun getSongs(query: String) {
-//        register(mainModel.getLocalSongs(query)
-//            .subscribe({ songs ->
-//                mainView.displaySongs(songs)
-//            }, Timber::e))
-        register(mainModel.getRemoteSongs(query)
+        register(mainModel.getSongs(query)
             .subscribe({ songs ->
                 mainView.displaySongs(songs)
             }, Timber::e)
