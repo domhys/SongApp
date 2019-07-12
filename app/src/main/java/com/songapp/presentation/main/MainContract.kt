@@ -10,6 +10,8 @@ interface MainContract {
     interface View : IBaseView<Presenter> {
         fun displaySongs(songs: List<Song>)
         fun displayChooseSourceDialog(dataSourcesState: BooleanArray)
+        fun showProgressBar()
+        fun hideProgressBar()
     }
 
     interface Presenter: IBasePresenter {

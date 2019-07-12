@@ -25,7 +25,7 @@ class GetSongsUseCase(
 
     fun getSongs(query: String): Single<List<Song>> {
         return getLocalSongs(query).zipWith(
-            getRemoteSongs(query),
+            getRemoteSongs(query).onErrorReturn { emptyList() },
             BiFunction { localSongs, remoteSongs -> localSongs + remoteSongs }
         )
     }

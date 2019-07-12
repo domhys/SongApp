@@ -17,6 +17,8 @@ class MainPresenter(
 
     private fun getSongs() {
         register(mainModel.getSongs(mainModel.currentQuery)
+            .doOnSubscribe { mainView.showProgressBar() }
+            .doFinally { mainView.hideProgressBar() }
             .subscribe({ songs ->
                 mainView.displaySongs(songs)
             }, Timber::e)

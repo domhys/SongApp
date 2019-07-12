@@ -5,6 +5,8 @@ import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.songapp.R
 import com.songapp.application.SongApplication
@@ -15,6 +17,7 @@ import com.songapp.presentation.main.di.DaggerMainComponent
 import com.songapp.presentation.main.di.MainModule
 import com.songapp.utility.extensions.setOnQueryChange
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.progress_bar_overlay.*
 import net.idik.lib.slimadapter.SlimAdapter
 import javax.inject.Inject
 
@@ -71,6 +74,14 @@ class MainActivity : BaseView<MainContract.Presenter>(), MainContract.View {
 
     override fun displaySongs(songs: List<Song>) {
         adapter.updateData(songs)
+    }
+
+    override fun showProgressBar() {
+        progressBarLayout.isVisible = true
+    }
+
+    override fun hideProgressBar() {
+        progressBarLayout.isGone = true
     }
 
     override fun displayChooseSourceDialog(dataSourcesState: BooleanArray) {

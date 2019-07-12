@@ -21,4 +21,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"/>
 
+    <include layout="@layout/progress_bar_overlay"
+             android:visibility="gone"
+             tools:visibility="visible"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
