@@ -1,10 +1,12 @@
 package com.songapp.application
 
 import android.app.Application
+import com.songapp.BuildConfig
 import com.songapp.application.di.ApplicationComponent
 import com.songapp.application.di.ApplicationModule
 import com.songapp.application.di.DaggerApplicationComponent
 import com.songapp.application.di.RepositoryModule
+import timber.log.Timber
 
 class SongApplication : Application() {
 
@@ -12,6 +14,7 @@ class SongApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        initTimber()
         applicationComponent = createGraph()
         applicationComponent.inject(this)
     }
@@ -21,4 +24,10 @@ class SongApplication : Application() {
             .applicationModule(ApplicationModule(this))
             .repositoryModule(RepositoryModule())
             .build()
+
+    private fun initTimber() {
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree())
+        }
+    }
 }
