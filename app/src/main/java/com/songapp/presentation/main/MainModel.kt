@@ -7,6 +7,8 @@ class MainModel(
     private val isLocalDataTurnedOnUseCase: IsLocalDataTurnedOnUseCase,
     private val isRemoteDataTurnedOnUseCase: IsRemoteDataTurnedOnUseCase
 ) {
+    var currentQuery = ""
+
     var isLocalDataTurnedOn: Boolean
         get() = isLocalDataTurnedOnUseCase.getIsLocalDataSourceTurnedOn()
         set(value) = isLocalDataTurnedOnUseCase.setLocalDataSourceTurnedOn(value)

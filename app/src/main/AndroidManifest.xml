@@ -12,7 +12,9 @@
             android:name=".application.SongApplication"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".presentation.main.MainActivity">
+        <activity
+                android:name=".presentation.main.MainActivity"
+                android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 

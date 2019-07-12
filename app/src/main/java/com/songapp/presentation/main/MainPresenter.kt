@@ -12,24 +12,24 @@ class MainPresenter(
 
     override fun onBind() {
         super.onBind()
-        getSongs("")
+        getSongs()
     }
 
-    private fun getSongs(query: String) {
-        register(mainModel.getSongs(query)
+    private fun getSongs() {
+        register(mainModel.getSongs(mainModel.currentQuery)
             .subscribe({ songs ->
                 mainView.displaySongs(songs)
             }, Timber::e)
         )
     }
 
-    override fun searchQuerySubmitted(query: String): Boolean {
-        getSongs(query)
-        return true
-    }
+    override fun searchQuerySubmitted(query: String) = queryChanged(query)
 
-    override fun queryTextChanged(query: String): Boolean {
-        getSongs(query)
+    override fun queryTextChanged(query: String) = queryChanged(query)
+
+    private fun queryChanged(query: String): Boolean {
+        mainModel.currentQuery = query
+        getSongs()
         return true
     }
 
@@ -37,6 +37,10 @@ class MainPresenter(
         mainView.displayChooseSourceDialog(
             booleanArrayOf(mainModel.isLocalDataTurnedOn, mainModel.isRemoteDataTurnedOn)
         )
+    }
+
+    override fun onSourceDialogPositiveButtonClicked() {
+        getSongs()
     }
 
     override fun sourceChanged(source: DataSource, isChecked: Boolean) {

@@ -17,5 +17,6 @@ interface MainContract {
         fun queryTextChanged(query: String): Boolean
         fun settingsClicked()
         fun sourceChanged(source: DataSource, isChecked: Boolean)
+        fun onSourceDialogPositiveButtonClicked()
     }
 }

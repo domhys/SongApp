@@ -1,7 +1,7 @@
 package com.songapp.domain.use_cases
 
 import com.songapp.domain.model.Song
-import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.functions.BiFunction
 
 class GetSongsUseCase(
@@ -11,19 +11,19 @@ class GetSongsUseCase(
     private val isRemoteDataTurnedOnUseCase: IsRemoteDataTurnedOnUseCase
 ) {
 
-    private fun getLocalSongs(query: String): Observable<List<Song>> {
+    private fun getLocalSongs(query: String): Single<List<Song>> {
         return if (isLocalDataTurnedOnUseCase.getIsLocalDataSourceTurnedOn())
-            getLocalSongsUseCase.getSongs(query).toObservable()
-        else Observable.empty()
+            getLocalSongsUseCase.getSongs(query)
+        else Single.just(emptyList())
     }
 
-    private fun getRemoteSongs(query: String): Observable<List<Song>> {
+    private fun getRemoteSongs(query: String): Single<List<Song>> {
         return if (isRemoteDataTurnedOnUseCase.getIsRemoteDataSourceTurnedOn())
-            getRemoteSongsUseCase.getSongs(query).toObservable()
-        else Observable.empty()
+            getRemoteSongsUseCase.getSongs(query)
+        else Single.just(emptyList())
     }
 
-    fun getSongs(query: String): Observable<List<Song>> {
+    fun getSongs(query: String): Single<List<Song>> {
         return getLocalSongs(query).zipWith(
             getRemoteSongs(query),
             BiFunction { localSongs, remoteSongs -> localSongs + remoteSongs }

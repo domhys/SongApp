@@ -82,6 +82,7 @@ class MainActivity : BaseView<MainContract.Presenter>(), MainContract.View {
             }.setTitle(R.string.choose_source)
             .setCancelable(false)
             .setPositiveButton(android.R.string.ok) { dialog, _ ->
+                presenter.onSourceDialogPositiveButtonClicked()
                 dialog.dismiss()
             }.create()
             .show()
