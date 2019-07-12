@@ -26,7 +26,7 @@ import javax.inject.Inject
 open class MainActivity : BaseView<MainContract.Presenter>(), MainContract.View {
 
     @Inject override lateinit var presenter: MainContract.Presenter
-    private val adapter = SlimAdapter.create()
+    @Inject lateinit var adapter: SlimAdapter
     private lateinit var searchView: SearchView
 
     private var searchDelay: Long = DEFAULT_SEARCH_DELAY_MILLIS

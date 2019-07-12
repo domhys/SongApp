@@ -17,5 +17,5 @@ open class MainModel(
         get() = isRemoteDataTurnedOnUseCase.getIsRemoteDataSourceTurnedOn()
         set(value) = isRemoteDataTurnedOnUseCase.setRemoteDataSourceTurnedOn(value)
 
-    open fun getSongs(query: String) = getSongsUseCase.getSongs(query)
+    open fun getSongs(query: String) = getSongsUseCase.withQuery(query).perform()
 }

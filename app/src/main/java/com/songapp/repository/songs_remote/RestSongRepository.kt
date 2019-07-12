@@ -7,7 +7,7 @@ import io.reactivex.Single
 
 open class RestSongRepository(
     private val songService: SongService
-) :SongRepository {
+) : SongRepository {
 
     override fun getSongs(query: String): Single<List<Song>> {
         return songService.getSongs(query, type = "song")

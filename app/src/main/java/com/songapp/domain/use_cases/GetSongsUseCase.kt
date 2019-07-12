@@ -7,12 +7,22 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.BiFunction
 
 open class GetSongsUseCase(
-    private val scheduler: Scheduler,
+    scheduler: Scheduler,
     private val getLocalSongsUseCase: GetLocalSongsUseCase,
     private val getRemoteSongsUseCase: GetRemoteSongsUseCase,
     private val isLocalDataTurnedOnUseCase: IsLocalDataTurnedOnUseCase,
-    private val isRemoteDataTurnedOnUseCase: IsRemoteDataTurnedOnUseCase
-) {
+    private val isRemoteDataTurnedOnUseCase: IsRemoteDataTurnedOnUseCase,
+    private val query: String? = null
+): UseCase<List<Song>>(scheduler) {
+
+    open fun withQuery(query: String) = GetSongsUseCase(
+        scheduler,
+        getLocalSongsUseCase,
+        getRemoteSongsUseCase,
+        isLocalDataTurnedOnUseCase,
+        isRemoteDataTurnedOnUseCase,
+        query
+    )
 
     private fun getLocalSongs(query: String): Single<List<Song>> {
         return if (isLocalDataTurnedOnUseCase.getIsLocalDataSourceTurnedOn())
@@ -26,12 +36,11 @@ open class GetSongsUseCase(
         else Single.just(emptyList())
     }
 
-    open fun getSongs(query: String): Single<List<Song>> {
+    override fun doWork(): Single<List<Song>> {
+        if (query == null) throw IllegalArgumentException("please provide query")
         return getLocalSongs(query).zipWith(
             getRemoteSongs(query).onErrorReturn { emptyList() },
             BiFunction { localSongs: List<Song>, remoteSongs: List<Song> -> localSongs + remoteSongs }
         )
-            .subscribeOn(scheduler)
-            .observeOn(AndroidSchedulers.mainThread())
     }
 }

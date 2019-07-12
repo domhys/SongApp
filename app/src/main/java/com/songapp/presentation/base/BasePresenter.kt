@@ -1,12 +1,14 @@
 package com.songapp.presentation.base
 
+import androidx.annotation.VisibleForTesting
 import com.songapp.presentation.IBasePresenter
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-open class BasePresenter: IBasePresenter {
+open class BasePresenter : IBasePresenter {
 
-    private val compositeDisposable = CompositeDisposable()
+    val compositeDisposable = CompositeDisposable()
+        @VisibleForTesting get() = field
 
     override fun onBind() {
         /* NO-OP */
@@ -17,6 +19,6 @@ open class BasePresenter: IBasePresenter {
     }
 
     override fun onDestroy() {
-        compositeDisposable.clear()
+        compositeDisposable.dispose()
     }
 }

@@ -6,8 +6,8 @@ import timber.log.Timber
 import java.lang.IllegalArgumentException
 
 open class MainPresenter(
-    val mainView: MainContract.View,
-    val mainModel: MainModel
+    private val mainView: MainContract.View,
+    private val mainModel: MainModel
 ) : BasePresenter(), MainContract.Presenter {
 
     override fun onBind() {
@@ -46,7 +46,7 @@ open class MainPresenter(
     }
 
     override fun sourceChanged(source: DataSource, isChecked: Boolean) {
-        when(source) {
+        when (source) {
             DataSource.LOCAL -> mainModel.isLocalDataTurnedOn = isChecked
             DataSource.REMOTE -> mainModel.isRemoteDataTurnedOn = isChecked
             DataSource.INVALID -> throw IllegalArgumentException()

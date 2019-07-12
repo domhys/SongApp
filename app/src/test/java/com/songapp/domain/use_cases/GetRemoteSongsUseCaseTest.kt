@@ -1,6 +1,7 @@
 package com.songapp.domain.use_cases
 
 import com.songapp.domain.model.Song
+import com.songapp.domain.model.SongFactory
 import com.songapp.repository.songs_remote.RestSongRepository
 import io.reactivex.Single
 import io.reactivex.schedulers.TestScheduler
@@ -26,7 +27,7 @@ class GetRemoteSongsUseCaseTest {
     fun shouldReturnSongs() {
         //given
         val query = "query"
-        val songsList: List<Song> = listOf(Song("title", "artist", "1994"))
+        val songsList: List<Song> = SongFactory.createSongList()
         whenDo(restSongRepository.getSongs(query)).thenReturn(Single.just(songsList))
 
         //when

@@ -16,6 +16,7 @@ import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
 import io.reactivex.schedulers.Schedulers
+import net.idik.lib.slimadapter.SlimAdapter
 import javax.inject.Scope
 
 @MainScope
@@ -41,6 +42,10 @@ class MainModule(private val activity: MainActivity) {
         mainView: MainContract.View,
         mainModel: MainModel
     ): MainContract.Presenter = MainPresenter(mainView, mainModel)
+
+    @MainScope
+    @Provides
+    fun providesAdapter(): SlimAdapter = SlimAdapter.create()
 
     @MainScope
     @Provides
