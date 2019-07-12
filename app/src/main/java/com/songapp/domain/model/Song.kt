@@ -27,4 +27,4 @@ data class SongRemoteEntity(
     @SerializedName("artistName") val artist: String = NO_DATA //release year is not in the api return entity
 )
 
-private const val NO_DATA = "No Data"
+private const val NO_DATA = ""

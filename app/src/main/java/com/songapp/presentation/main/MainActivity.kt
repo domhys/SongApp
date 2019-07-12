@@ -3,10 +3,12 @@ package com.songapp.presentation.main
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.songapp.R
 import com.songapp.application.SongApplication
@@ -45,11 +47,18 @@ class MainActivity : BaseView<MainContract.Presenter>(), MainContract.View {
 
     private fun setUpSongsList() {
         songsList.layoutManager = LinearLayoutManager(this)
+        addListDividers()
         adapter.register<Song>(R.layout.songs_list_row) { data, injector ->
             injector.text(R.id.title, data.title)
                 .text(R.id.artist, data.artist)
                 .text(R.id.releaseYear, data.releaseYear)
+                .visibility(R.id.releaseYear, if (data.releaseYear.isEmpty()) View.GONE else View.VISIBLE )
         }.attachTo(songsList)
+    }
+
+    private fun addListDividers() {
+        songsList.addItemDecoration(
+            DividerItemDecoration(songsList.context, (songsList.layoutManager as LinearLayoutManager).orientation))
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
