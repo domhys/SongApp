@@ -5,7 +5,7 @@ import com.songapp.presentation.base.BasePresenter
 import timber.log.Timber
 import java.lang.IllegalArgumentException
 
-class MainPresenter(
+open class MainPresenter(
     val mainView: MainContract.View,
     val mainModel: MainModel
 ) : BasePresenter(), MainContract.Presenter {

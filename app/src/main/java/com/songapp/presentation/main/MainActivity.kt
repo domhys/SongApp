@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.progress_bar_overlay.*
 import net.idik.lib.slimadapter.SlimAdapter
 import javax.inject.Inject
 
-class MainActivity : BaseView<MainContract.Presenter>(), MainContract.View {
+open class MainActivity : BaseView<MainContract.Presenter>(), MainContract.View {
 
     @Inject override lateinit var presenter: MainContract.Presenter
     private val adapter = SlimAdapter.create()

@@ -8,7 +8,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class RepositoryModule {
+open class RepositoryModule {
 
     @Provides
     fun providesRestSongRepository(songService: SongService): RestSongRepository {

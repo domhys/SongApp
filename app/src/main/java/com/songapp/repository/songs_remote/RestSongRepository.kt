@@ -5,7 +5,7 @@ import com.songapp.domain.repositories.SongRepository
 import io.reactivex.Observable
 import io.reactivex.Single
 
-class RestSongRepository(
+open class RestSongRepository(
     private val songService: SongService
 ) :SongRepository {
 

@@ -4,15 +4,17 @@ import com.songapp.domain.model.Song
 import com.songapp.repository.songs_remote.RestSongRepository
 import io.reactivex.Scheduler
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
 
-class GetRemoteSongsUseCase(
-    private val scheduler: Scheduler,
-    private val restSongRepository: RestSongRepository
-) {
+open class GetRemoteSongsUseCase(
+    scheduler: Scheduler,
+    private val restSongRepository: RestSongRepository,
+    private val query: String? = null
+): UseCase<List<Song>>(scheduler) {
 
-    fun getSongs(query: String): Single<List<Song>> =
-        restSongRepository.getSongs(query)
-            .subscribeOn(scheduler)
-            .observeOn(AndroidSchedulers.mainThread())
+    open fun withQuery(query: String) = GetRemoteSongsUseCase(scheduler, restSongRepository, query)
+
+    override fun doWork(): Single<List<Song>> {
+        if (query == null) throw IllegalArgumentException("please provide query")
+        return restSongRepository.getSongs(query)
+    }
 }

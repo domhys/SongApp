@@ -7,12 +7,12 @@ import com.songapp.domain.model.SongLocalEntity
 import com.songapp.utility.AssetsStringReader
 import java.lang.reflect.Type
 
-class LocalSongsRepository(
+open class LocalSongsRepository(
     private val assetsStringReader: AssetsStringReader,
     private val gson: Gson
 ) {
 
-    fun getSongs(): List<Song> {
+    open fun getSongs(): List<Song> {
         return readJson<List<SongLocalEntity>>(SONGS_PATH, object : TypeToken<List<SongLocalEntity>>() {}.type)
             .map(::Song)
     }

@@ -2,15 +2,15 @@ package com.songapp.domain.use_cases
 
 import com.songapp.domain.repositories.DataSourceRepository
 
-class IsRemoteDataTurnedOnUseCase(
+open class IsRemoteDataTurnedOnUseCase(
     private val dataSourceRepository: DataSourceRepository
 ) {
 
-    fun getIsRemoteDataSourceTurnedOn(): Boolean {
+    open fun getIsRemoteDataSourceTurnedOn(): Boolean {
         return dataSourceRepository.getIsRemoteDataSet()
     }
 
-    fun setRemoteDataSourceTurnedOn(turnOn: Boolean) {
+    open fun setRemoteDataSourceTurnedOn(turnOn: Boolean) {
         dataSourceRepository.setRemoteData(turnOn)
     }
 }

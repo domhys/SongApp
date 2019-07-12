@@ -8,7 +8,7 @@ import com.songapp.application.di.DaggerApplicationComponent
 import com.songapp.application.di.RepositoryModule
 import timber.log.Timber
 
-class SongApplication : Application() {
+open class SongApplication : Application() {
 
     internal lateinit var applicationComponent: ApplicationComponent
 

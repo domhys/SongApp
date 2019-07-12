@@ -23,7 +23,7 @@ interface ApplicationComponent {
 }
 
 @Module
-class ApplicationModule(val application: SongApplication) {
+open class ApplicationModule(val application: SongApplication) {
 
     @Provides
     fun provideGson(): Gson {

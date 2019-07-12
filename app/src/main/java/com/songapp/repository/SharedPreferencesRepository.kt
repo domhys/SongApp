@@ -3,7 +3,7 @@ package com.songapp.repository
 import android.content.SharedPreferences
 import com.songapp.domain.repositories.DataSourceRepository
 
-class SharedPreferencesRepository(
+open class SharedPreferencesRepository(
     private val sharedPreferences: SharedPreferences
 ) : DataSourceRepository{
 
